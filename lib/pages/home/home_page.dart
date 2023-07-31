@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:santander_app/models/user_model/user_model.dart';
+import 'package:santander_app/shared/app_settings.dart';
+import 'package:santander_app/widgets/balance.dart';
+import 'package:santander_app/widgets/card.dart';
+import 'package:santander_app/widgets/features.dart';
 
 import 'package:santander_app/widgets/header.dart';
+import 'package:santander_app/widgets/info_card.dart';
 import '../../services/api.dart';
 import '../../shared/app_colors.dart';
 import 'package:santander_app/shared/app_images';
@@ -55,10 +60,27 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),
-            body: Column(
+            body: Stack(
               children: [
-                HeaderWidget(
-                  user: user!,
+                Column(
+                  children: [
+                    HeaderWidget(
+                      user: user!,
+                    ),
+                    const SizedBox(
+                      height: 200,
+                    ),
+                    FeaturesWidget(features: user!.features!),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CardWidget(card: user!.card!),
+                    InfoCardsWidget(news: user!.news!),
+                  ],
+                ),
+                Positioned(
+                  top: (AppSettings.screenHeight / 5) - 20,
+                  child: BalanceWidget(account: user!.account!),
                 ),
               ],
             ),
